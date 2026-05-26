@@ -40,7 +40,9 @@ export default function DashboardLayout({
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <span>⚡ {user?.unsafeMetadata?.eclairs || 2500} éclairs</span>
+          <span>
+            ⚡ {(user?.unsafeMetadata?.eclairs as number) || 2500} éclairs
+          </span>
         </div>
       </nav>
       <main style={{ minHeight: 'calc(100vh - 70px)' }}>
