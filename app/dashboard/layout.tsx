@@ -19,7 +19,8 @@ export default function DashboardLayout({
         padding: '1rem 2rem',
         borderBottom: '1px solid var(--border)',
         background: 'var(--bg)',
-        sticky: 'top',
+        position: sticky;
+        top: 0;
         top: 0,
         zIndex: 100,
       }}>
