@@ -17,8 +17,8 @@ export async function POST(request: NextRequest) {
     const comment = await createRecord('Comments', {
       content,
       pseudo,
-      ideaId: [ideaId],
-      userId,
+      ideaId, // ID du record idea
+      userId, // clerkId de l'user
       createdAt: new Date().toISOString(),
     });
 
@@ -30,9 +30,9 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error('Error creating comment:', error);
+    console.error('Erreur création comment:', error);
     return NextResponse.json(
-      { error: 'Erreur lors de la création du commentaire' },
+      { error: 'Erreur serveur' },
       { status: 500 }
     );
   }

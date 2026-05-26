@@ -13,15 +13,19 @@ export async function GET(
     const idea = await getRecordById('Ideas', ideaId);
 
     // Vérifier les permissions
-    if (idea.fields.visibility === 'Privé' && idea.fields.createdBy !== userId) {
-      return NextResponse.json(
-        { error: 'Vous n\'avez pas accès à cette idée' },
-        { status: 403 }
-      );
+    if (idea.fields.visibility === 'Privé') {
+      // Pour les idées privées, vérifier que c'est le créateur
+      if (idea.fields.createdBy !== userId) {
+        return NextResponse.json(
+          { error: 'Accès refusé' },
+          { status: 403 }
+        );
+      }
     }
 
     // Récupérer les commentaires
-    const comments = await getRecordsByFormula('Comments', `{ideaId} = '${ideaId}'`);
+    const commentFormula = `{ideaId} = "${ideaId}"`;
+    const comments = await getRecordsByFormula('Comments', commentFormula);
 
     return NextResponse.json(
       {
@@ -34,10 +38,10 @@ export async function GET(
       },
       { status: 200 }
     );
-  } catch (error) {
-    console.error('Error fetching idea:', error);
+  } catch (error: any) {
+    console.error('Erreur GET idea:', error);
     return NextResponse.json(
-      { error: 'Erreur lors du chargement de l\'idée' },
+      { error: 'Erreur serveur' },
       { status: 500 }
     );
   }

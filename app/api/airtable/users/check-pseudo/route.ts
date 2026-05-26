@@ -5,27 +5,25 @@ export async function GET(request: NextRequest) {
   try {
     const pseudo = request.nextUrl.searchParams.get('pseudo');
 
-    if (!pseudo) {
+    if (!pseudo || pseudo.length < 3) {
       return NextResponse.json(
-        { error: 'Pseudo manquant' },
+        { available: false, error: 'Pseudo trop court' },
         { status: 400 }
       );
     }
 
     // Vérifier l'existence du pseudo
-    const users = await getRecordsByFormula('Users', `{pseudo} = '${pseudo}'`);
+    const formula = `{pseudo} = "${pseudo}"`;
+    const users = await getRecordsByFormula('Users', formula);
 
-    return NextResponse.json(
-      {
-        available: users.length === 0,
-        pseudo,
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      available: users.length === 0,
+      pseudo,
+    });
   } catch (error: any) {
-    console.error('Error checking pseudo:', error);
+    console.error('Erreur check pseudo:', error);
     return NextResponse.json(
-      { error: 'Erreur lors de la vérification' },
+      { available: false, error: 'Erreur serveur' },
       { status: 500 }
     );
   }

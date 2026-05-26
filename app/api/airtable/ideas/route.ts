@@ -6,13 +6,16 @@ export async function GET(request: NextRequest) {
     const userId = request.nextUrl.searchParams.get('userId');
 
     // Récupérer toutes les idées publiques
-    const publicIdeas = await getRecordsByFormula('Ideas', "{visibility} = 'Public'");
+    const publicFormula = `{visibility} = "Public"`;
+    const publicIdeas = await getRecordsByFormula('Ideas', publicFormula);
 
     // Si userId fourni, ajouter ses idées privées
     let allIdeas = publicIdeas;
     if (userId) {
-      const userIdeas = await getRecordsByFormula('Ideas', `{createdBy} = '${userId}'`);
-      allIdeas = [...publicIdeas, ...userIdeas.filter((idea: any) => idea.fields.visibility === 'Privé')];
+      // Récupérer les idées privées de l'user
+      const privateFormula = `AND({visibility} = "Privé", {createdBy} = "${userId}")`;
+      const privateIdeas = await getRecordsByFormula('Ideas', privateFormula);
+      allIdeas = [...publicIdeas, ...privateIdeas];
     }
 
     return NextResponse.json(
@@ -22,10 +25,10 @@ export async function GET(request: NextRequest) {
       })),
       { status: 200 }
     );
-  } catch (error) {
-    console.error('Error fetching ideas:', error);
+  } catch (error: any) {
+    console.error('Erreur GET ideas:', error);
     return NextResponse.json(
-      { error: 'Erreur lors du chargement des idées' },
+      { error: 'Erreur serveur' },
       { status: 500 }
     );
   }

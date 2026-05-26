@@ -8,13 +8,15 @@ export async function POST(request: NextRequest) {
 
     if (!clerkId || !email || !pseudo) {
       return NextResponse.json(
-        { error: 'Paramètres manquants' },
+        { error: 'clerkId, email et pseudo requis' },
         { status: 400 }
       );
     }
 
     // Vérifier que le pseudo est unique
-    const existingUsers = await getRecordsByFormula('Users', `{pseudo} = '${pseudo}'`);
+    const formula = `{pseudo} = "${pseudo}"`;
+    const existingUsers = await getRecordsByFormula('Users', formula);
+    
     if (existingUsers.length > 0) {
       return NextResponse.json(
         { error: 'Ce pseudo est déjà pris' },
@@ -22,9 +24,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Vérifier que le clerkId n'existe pas déjà
-    const existingClerkUsers = await getRecordsByFormula('Users', `{clerkId} = '${clerkId}'`);
-    if (existingClerkUsers.length > 0) {
+    // Vérifier que le clerkId n'existe pas
+    const clerkFormula = `{clerkId} = "${clerkId}"`;
+    const existingClerk = await getRecordsByFormula('Users', clerkFormula);
+    
+    if (existingClerk.length > 0) {
       return NextResponse.json(
         { error: 'Cet utilisateur existe déjà' },
         { status: 409 }
@@ -48,9 +52,9 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error('Error creating user:', error);
+    console.error('Erreur création user:', error);
     return NextResponse.json(
-      { error: error.message || 'Erreur lors de la création de l\'utilisateur' },
+      { error: error.message || 'Erreur serveur' },
       { status: 500 }
     );
   }

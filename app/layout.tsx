@@ -4,7 +4,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Ottonowmy Idea',
-  description: 'Trouve l\'inspiration, partage tes idées',
+  description: 'Partage tes idées d\'apps brillantes',
 };
 
 export default function RootLayout({

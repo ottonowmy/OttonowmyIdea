@@ -37,8 +37,8 @@ export async function POST(request: NextRequest) {
 
     // Créer le vote
     const vote = await createRecord('Votes', {
-      ideaId: [ideaId],
-      userId,
+      ideaId, // ID du record idea
+      userId, // clerkId
       voteType,
       createdAt: new Date().toISOString(),
     });
@@ -55,9 +55,9 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error('Error voting:', error);
+    console.error('Erreur vote:', error);
     return NextResponse.json(
-      { error: 'Erreur lors du vote' },
+      { error: 'Erreur serveur' },
       { status: 500 }
     );
   }

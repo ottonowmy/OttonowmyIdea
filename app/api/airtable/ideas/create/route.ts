@@ -13,8 +13,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Vérifier que l'utilisateur existe et a assez d'éclairs
-    const users = await getRecordsByFormula('Users', `{clerkId} = '${userId}'`);
+    // Récupérer l'utilisateur par clerkId
+    const userFormula = `{clerkId} = "${userId}"`;
+    const users = await getRecordsByFormula('Users', userFormula);
     
     if (users.length === 0) {
       return NextResponse.json(
@@ -29,17 +30,17 @@ export async function POST(request: NextRequest) {
 
     if (currentEclairs < CREATION_COST) {
       return NextResponse.json(
-        { error: `Vous n'avez pas assez d'éclairs (besoin: ${CREATION_COST}, vous avez: ${currentEclairs})` },
+        { error: `Pas assez d'éclairs (besoin: ${CREATION_COST}, vous avez: ${currentEclairs})` },
         { status: 400 }
       );
     }
 
-    // Créer l'idée en liant l'utilisateur par son ID Airtable
+    // Créer l'idée - créatedBy doit être l'ID du record Airtable
     const newIdea = await createRecord('Ideas', {
       title,
       description,
       visibility,
-      createdBy: [user.id], // Lien Airtable vers Users
+      createdBy: user.id, // ID du record Airtable, pas array
       likes: 0,
       dislikes: 0,
       status: 'draft',
@@ -55,14 +56,13 @@ export async function POST(request: NextRequest) {
       {
         id: newIdea.id,
         ...newIdea.fields,
-        message: `Idée créée! Vous avez dépensé ${CREATION_COST} éclairs.`,
       },
       { status: 201 }
     );
   } catch (error: any) {
-    console.error('Error creating idea:', error);
+    console.error('Erreur création idea:', error);
     return NextResponse.json(
-      { error: error.message || 'Erreur lors de la création de l\'idée' },
+      { error: error.message || 'Erreur serveur' },
       { status: 500 }
     );
   }
