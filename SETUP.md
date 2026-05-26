@@ -5,15 +5,12 @@
 ### 1️⃣ Cloner/Télécharger le projet
 
 ```bash
-# Extraire le ZIP
 unzip ottonowmy-idea-nextjs.zip
 cd ottonowmy-idea-nextjs
-
-# Installer les dépendances
 npm install
 ```
 
-### 2️⃣ Clerk (Authentification)
+### 2️⃣ Clerk (Authentification) - IMPORTANT!
 
 1. Aller sur [clerk.com](https://clerk.com)
 2. Créer un nouveau projet
@@ -22,39 +19,72 @@ npm install
    - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
    - `CLERK_SECRET_KEY`
 
-**Configure les URLs dans Clerk Dashboard:**
+**⚠️ IMPORTANT - Configure les URLs dans Clerk Dashboard:**
+
+Dans "User & Authentication" → "Paths":
 - Sign in URL: `/auth/sign-in`
 - Sign up URL: `/auth/sign-up`
-- After sign in: `/auth/setup` (création du pseudo)
-- After sign up: `/auth/setup` (création du pseudo)
+- **After sign in URL: `/auth/setup`** ← CRÉER LE PSEUDO
+- **After sign up URL: `/auth/setup`** ← CRÉER LE PSEUDO
 
-### 3️⃣ Airtable (Base de données)
+Ceci est CRUCIAL! Sans ça, l'utilisateur ne sera pas redirigé pour créer son pseudo.
 
-1. Aller sur [airtable.com](https://airtable.com)
-2. Créer une base appelée "Ottonowmy Idea"
-3. Créer les 4 tables (voir AIRTABLE_SETUP.md)
-4. Récupérer:
-   - **Base ID**: visible dans l'URL
-   - **API Key**: Compte → Tokens d'accès personnels
+### 3️⃣ Airtable (Base de données) - IMPORTANT!
 
-**Créer un token d'accès:**
-1. Compte (en haut à droite) → Tokens d'accès personnels
-2. Créer un nouveau token
-3. Sélectionner les scopes: `data.records:read`, `data.records:write`, `schema.bases:read`
+**Créer les 4 tables:**
+
+#### Table 1: Users
+Colonnes:
+- `clerkId` (Text, unique)
+- `email` (Email)
+- `pseudo` (Text, unique)
+- `eclairs` (Number, default: 0)
+- `createdAt` (Date)
+
+#### Table 2: Ideas
+Colonnes:
+- `title` (Text)
+- `description` (Text)
+- `visibility` (Single select: "Public", "Privé")
+- `createdBy` (Text) - Stocke l'ID Airtable du User
+- `likes` (Number, default: 0)
+- `dislikes` (Number, default: 0)
+- `status` (Single select: "draft", "published", "launched")
+- `createdAt` (Date)
+
+#### Table 3: Comments
+Colonnes:
+- `content` (Text)
+- `pseudo` (Text)
+- `ideaId` (Text) - ID Airtable de l'idée
+- `userId` (Text) - clerkId de l'user
+- `createdAt` (Date)
+
+#### Table 4: Votes
+Colonnes:
+- `ideaId` (Text) - ID Airtable
+- `userId` (Text) - clerkId
+- `voteType` (Single select: "like", "dislike")
+- `createdAt` (Date)
+
+**Récupérer:**
+1. Base ID: visible dans l'URL de Airtable
+2. API Key: Compte → "Tokens d'accès personnels"
+   - Créer nouveau token
+   - Sélectionner: `data.records:read`, `data.records:write`
 
 ### 4️⃣ OpenAI (Recherche IA)
 
-1. Aller sur [openai.com](https://platform.openai.com)
-2. Créer un compte / Se connecter
-3. API Keys → Create new secret key
-4. Copier la clé (`sk_...`)
+1. Aller sur [platform.openai.com](https://platform.openai.com)
+2. API Keys → Create new secret key
+3. Copier la clé
 
 ### 5️⃣ Fichier .env.local
 
-Créer un fichier `.env.local` à la racine:
+Créer `.env.local` à la racine du projet:
 
 ```env
-# CLERK
+# CLERK - Copier vos clés depuis Clerk Dashboard
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_YOUR_KEY
 CLERK_SECRET_KEY=sk_test_YOUR_KEY
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/auth/sign-in
@@ -62,15 +92,15 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL=/auth/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/auth/setup
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/auth/setup
 
-# AIRTABLE
+# AIRTABLE - Copier depuis Airtable
 AIRTABLE_API_KEY=pat_YOUR_API_KEY
 AIRTABLE_BASE_ID=appXXXXXXXXXXXXXX
 
-# OPENAI
+# OPENAI - Copier depuis OpenAI Dashboard
 OPENAI_API_KEY=sk_YOUR_OPENAI_KEY
 ```
 
-### 6️⃣ Lancer le serveur
+### 6️⃣ Lancer le projet
 
 ```bash
 npm run dev
@@ -82,88 +112,71 @@ Ouvre [http://localhost:3000](http://localhost:3000)
 
 - [ ] Compte Clerk créé
 - [ ] Clés Clerk dans `.env.local`
+- [ ] **URLs de redirection configurées dans Clerk** (IMPORTANT!)
 - [ ] Base Airtable créée avec 4 tables
 - [ ] Clés Airtable dans `.env.local`
 - [ ] Token OpenAI créé dans `.env.local`
 - [ ] `npm install` lancé
 - [ ] `npm run dev` fonctionne
-- [ ] Page `/dashboard` accessible
-- [ ] Créer un pseudo unique fonctionne
-- [ ] Créer un projet fonctionne (avec 700 éclairs déduits)
+- [ ] Inscription fonctionne
+- [ ] Création du pseudo fonctionne
+- [ ] Redirection vers `/dashboard` OK
 
-## 📊 Structure Airtable à créer
+## 🧪 Test du flux complet
 
-**Voir AIRTABLE_SETUP.md pour les détails complets**
+1. Ouvre http://localhost:3000
+2. Clique "S'inscrire"
+3. Remplis les champs
+4. **Tu dois être redirigé à `/auth/setup`** (création du pseudo)
+5. Entre un pseudo unique
+6. Tu dois être redirigé à `/dashboard`
+7. Voir les éclairs (0 au départ)
+8. Créer une idée → déduction 700 éclairs
 
-Tables:
-1. **Users** - Utilisateurs (clerkId, email, pseudo, eclairs)
-2. **Ideas** - Projets (title, description, visibility, createdBy, likes, dislikes, status)
-3. **Comments** - Commentaires (content, pseudo, ideaId, userId, createdAt)
-4. **Votes** - Votes (ideaId, userId, voteType, createdAt)
+## 🐛 Troubleshooting
 
-Relations:
-- Ideas.createdBy → Users.id
-- Comments.ideaId → Ideas.id
-- Votes.ideaId → Ideas.id
+### "Utilisateur non trouvé" après création du pseudo
 
-## 🔗 Endpoints API
+**Cause:** L'utilisateur n'a pas été créé dans Airtable.
 
-### Users
-- `GET /api/airtable/users/[id]` - Récupérer user par clerkId
-- `POST /api/airtable/users/create` - Créer user
-- `GET /api/airtable/users/check-pseudo?pseudo=XXX` - Vérifier disponibilité pseudo
+**Solution:**
+1. Vérifier que tu es bien redirigé à `/auth/setup` après l'inscription
+2. Vérifier que Clerk URLs sont bien configurées:
+   - After sign up URL: `/auth/setup`
+   - After sign in URL: `/auth/setup`
+3. Vérifier que AIRTABLE_API_KEY et AIRTABLE_BASE_ID sont corrects
+4. Ouvrir la console du navigateur (F12) et voir les erreurs
+5. Ouvrir http://localhost:3000/api/airtable/users/check-pseudo?pseudo=test pour tester l'API
 
-### Ideas
-- `GET /api/airtable/ideas?userId=XXX` - Récupérer idées (publiques + les siennes)
-- `GET /api/airtable/ideas/[id]?userId=XXX` - Récupérer une idée (avec permission)
-- `POST /api/airtable/ideas/create` - Créer une idée
+### "Ce pseudo est déjà pris" mais je viens de le créer
 
-### Votes
-- `POST /api/airtable/votes` - Voter (like/dislike)
+Attendre quelques secondes. Airtable peut avoir du délai de propagation.
 
-### Comments
-- `POST /api/airtable/comments` - Ajouter un commentaire
+### Création d'idée ne fonctionne pas
 
-### OpenAI
-- `POST /api/openai/suggestions` - Générer des idées IA
-- `POST /api/openai/filter` - Filtrer avec IA
+Vérifier:
+1. Qu'on a créé le pseudo (sinon l'user n'existe pas)
+2. Que les éclairs s'affichent dans la navbar
+3. Que tu as au moins 700 éclairs
 
-## 🚀 Déploiement
+## 📚 Structure Airtable - Important!
 
-### Vercel (recommandé)
+**Ne pas utiliser de liens (Link to another table) mais du Text pour:**
+- `Ideas.createdBy` → stocke l'ID Airtable du User (pas un lien!)
+- `Comments.ideaId` → stocke l'ID Airtable (pas un lien!)
+- `Votes.ideaId` → stocke l'ID Airtable (pas un lien!)
+
+Pourquoi? Parce que c'est plus simple à gérer dans l'API et pas de problèmes de relations bidirectionnelles.
+
+## 🚀 Déploiement Vercel
 
 ```bash
-# Installer Vercel CLI
 npm i -g vercel
-
-# Déployer
 vercel
-
-# Ajouter les variables d'environnement dans Vercel Dashboard
 ```
 
-### Variables d'environnement à ajouter:
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-- `CLERK_SECRET_KEY`
-- `AIRTABLE_API_KEY`
-- `AIRTABLE_BASE_ID`
-- `OPENAI_API_KEY`
-
-## 📚 Ressources
-
-- [Clerk Docs](https://clerk.com/docs)
-- [Airtable API](https://airtable.com/developers/web)
-- [OpenAI Docs](https://platform.openai.com/docs)
-- [Next.js Docs](https://nextjs.org/docs)
-
-## 🆘 Support
-
-Si vous rencontrez des problèmes:
-1. Vérifiez les clés dans `.env.local`
-2. Vérifiez la structure Airtable
-3. Vérifiez les URLs de redirection Clerk
-4. Consultez les logs du serveur (`npm run dev`)
+Ajouter les variables d'environnement dans Vercel Dashboard.
 
 ---
 
-**Prêt? Commençons!** 🎉
+**Prêt? C'est parti!** 🎉

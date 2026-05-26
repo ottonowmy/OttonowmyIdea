@@ -20,7 +20,7 @@ export default function SetupPage() {
   }, [isLoaded, user, router]);
 
   const checkPseudoAvailability = async (value: string) => {
-    if (!value.trim()) return;
+    if (!value.trim() || value.length < 3) return;
     
     setChecking(true);
     try {
@@ -65,7 +65,8 @@ export default function SetupPage() {
     setError('');
 
     try {
-      // Créer l'utilisateur dans Airtable
+      console.log('Création user avec clerkId:', user?.id);
+      
       const response = await fetch('/api/airtable/users/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -81,7 +82,7 @@ export default function SetupPage() {
         throw new Error(err.error || 'Erreur de création');
       }
 
-      console.log('Utilisateur créé');
+      console.log('User créé avec succès');
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Erreur lors de la création du pseudo');
@@ -91,7 +92,7 @@ export default function SetupPage() {
     }
   };
 
-  if (!isLoaded) return <div>Chargement...</div>;
+  if (!isLoaded) return <div style={{ padding: '20px', textAlign: 'center' }}>Chargement...</div>;
 
   return (
     <div className={styles.container}>
@@ -136,4 +137,3 @@ export default function SetupPage() {
     </div>
   );
 }
-
