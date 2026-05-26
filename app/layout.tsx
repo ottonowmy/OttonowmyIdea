@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
-import './globals.css';
+import type { Metadata } from 'next';
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
   title: 'Ottonowmy Idea',
-  description: 'Partage tes idées d\'apps brillantes',
+  description: 'Partagez vos idées d\'apps',
 };
 
 export default function RootLayout({

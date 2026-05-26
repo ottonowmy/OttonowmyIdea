@@ -1,78 +1,49 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { UserButton } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import styles from './layout.module.css';
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isLoaded, isSignedIn, user } = useUser();
-  const [eclairs, setEclairs] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (user?.id) {
-      const fetchEclairs = async () => {
-        try {
-          const response = await fetch(`/api/airtable/users/${user.id}`);
-          if (!response.ok) throw new Error('Erreur de chargement');
-          
-          const userData = await response.json();
-          setEclairs(userData.eclairs || 0);
-        } catch (err) {
-          console.error('Erreur:', err);
-          setEclairs(0);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchEclairs();
-    }
-  }, [user?.id]);
-
-  if (!isLoaded) return <div>Chargement...</div>;
-  if (!isSignedIn) redirect('/auth/sign-in');
+  const { user } = useUser();
 
   return (
-    <div className={styles.dashboard}>
-      <nav className={styles.nav}>
-        <div className={styles.container}>
-          <Link href="/dashboard" className={styles.logo}>
-            Ottonowmy Idea
+    <div>
+      <nav style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1rem 2rem',
+        borderBottom: '1px solid var(--border)',
+        background: 'var(--bg)',
+        sticky: 'top',
+        top: 0,
+        zIndex: 100,
+      }}>
+        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+          <Link href="/" style={{ fontSize: '1.5rem', fontWeight: '700' }}>
+            💡 Ottonowmy
           </Link>
-          <ul className={styles.navLinks}>
-            <li><Link href="/dashboard">Accueil</Link></li>
-            <li><Link href="/dashboard/ideas">Explorer</Link></li>
-            <li><Link href="/dashboard/my-projects">Mes projets</Link></li>
-            <li><Link href="/dashboard/create">Créer</Link></li>
-          </ul>
-          <div className={styles.navRight}>
-            <div className={styles.eclairs}>
-              <svg className={styles.eclairsIcon} viewBox="0 0 24 24" fill="currentColor">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-              <span className={styles.eclairsValue}>{loading ? '...' : eclairs}</span>
-            </div>
-            <UserButton 
-              appearance={{
-                elements: {
-                  avatarBox: { width: '36px', height: '36px' },
-                },
-              }}
-              afterSignOutUrl="/"
-            />
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <Link href="/dashboard" style={{ color: 'var(--primary)', textDecoration: 'none' }}>
+              Accueil
+            </Link>
+            <Link href="/dashboard/ideas" style={{ color: 'var(--primary)', textDecoration: 'none' }}>
+              Explorer
+            </Link>
+            <Link href="/dashboard/create" className="btn btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
+              Créer une Idée
+            </Link>
           </div>
         </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <span>⚡ {user?.unsafeMetadata?.eclairs || 2500} éclairs</span>
+        </div>
       </nav>
-
-      <main className={styles.content}>
+      <main style={{ minHeight: 'calc(100vh - 70px)' }}>
         {children}
       </main>
     </div>

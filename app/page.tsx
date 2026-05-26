@@ -1,101 +1,54 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import styles from './page.module.css';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 export default function Home() {
-  const { isLoaded, isSignedIn } = useUser();
-  const router = useRouter();
-
-  if (isLoaded && isSignedIn) {
-    router.push('/dashboard');
-    return null;
-  }
-
   return (
-    <main className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <h1>Ottonowmy Idea</h1>
-          <Link href="/auth/sign-in" className={styles.signInLink}>
-            Se connecter
-          </Link>
+    <div>
+      <nav style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        padding: '1rem 2rem',
+        borderBottom: '1px solid var(--border)',
+        background: 'var(--bg)'
+      }}>
+        <h1 style={{ margin: 0, fontSize: '1.5rem' }}>💡 Ottonowmy</h1>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <SignedOut>
+            <Link href="/auth/sign-in" className="btn btn-secondary">Connexion</Link>
+            <Link href="/auth/sign-up" className="btn btn-primary">S'inscrire</Link>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/dashboard" className="btn btn-primary">Dashboard</Link>
+            <UserButton />
+          </SignedIn>
         </div>
-      </header>
+      </nav>
 
-      <section className={styles.hero}>
-        <h2>Trouve l'inspiration, partage tes idées d'app</h2>
-        <p>Une plateforme pour explorer, créer et développer les meilleures idées d'applications</p>
-        <Link href="/auth/sign-up" className={styles.ctaButton}>
-          Commencer à découvrir
-        </Link>
-      </section>
-
-      <section className={styles.how}>
-        <div className={styles.sectionContainer}>
-          <h2>Découvre. Inspire. Lance.</h2>
-          <div className={styles.stepsGrid}>
-            <div className={styles.step}>
-              <div className={styles.num}>1</div>
-              <h3>Explore les idées</h3>
-              <p>Parcourez les projets d'applications en développement et trouvez l'inspiration.</p>
-            </div>
-            <div className={styles.step}>
-              <div className={styles.num}>2</div>
-              <h3>Donnez des avis</h3>
-              <p>Partagez vos retours avec notes et témoignages pour aider les créateurs.</p>
-            </div>
-            <div className={styles.step}>
-              <div className={styles.num}>3</div>
-              <h3>Gagnez des éclairs</h3>
-              <p>Chaque avis utile vous rapporte des éclairs à utiliser pour vos projets.</p>
-            </div>
-            <div className={styles.step}>
-              <div className={styles.num}>4</div>
-              <h3>Créez votre app</h3>
-              <p>Utilisez 700 éclairs pour publier votre propre idée d'application.</p>
-            </div>
-          </div>
+      <section style={{ padding: '6rem 2rem', textAlign: 'center', background: 'linear-gradient(135deg, #fff 0%, #f8f8f8 100%)' }}>
+        <div className="container">
+          <h1>Partagez vos idées d'apps</h1>
+          <p style={{ fontSize: '1.2rem', marginBottom: '2rem' }}>
+            Une plateforme pour explorer et créer ensemble
+          </p>
+          <SignedOut>
+            <Link href="/auth/sign-up" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
+              Commencer →
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/dashboard" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
+              Aller au Dashboard →
+            </Link>
+          </SignedIn>
         </div>
       </section>
 
-      <section className={styles.features}>
-        <div className={styles.sectionContainer}>
-          <h2>Pourquoi Ottonowmy Idea</h2>
-          <div className={styles.featuresList}>
-            <div className={styles.feature}>
-              <h3>Pour les développeurs</h3>
-              <p>Partagez vos idées d'apps et obtenez des retours constructifs de la communauté</p>
-            </div>
-            <div className={styles.feature}>
-              <h3>Monnaie virtuelle</h3>
-              <p>Gagnez des éclairs en donnant des avis, dépensez-les pour lancer vos projets</p>
-            </div>
-            <div className={styles.feature}>
-              <h3>Communauté active</h3>
-              <p>Connectez-vous avec d'autres développeurs passionnés par les nouvelles idées</p>
-            </div>
-            <div className={styles.feature}>
-              <h3>Transparence totale</h3>
-              <p>Visibilité publique ou privée pour chaque projet selon vos préférences</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.cta}>
-        <h2>Prêt à partager votre idée d'app?</h2>
-        <p>Rejoignez une communauté de développeurs où chaque idée compte</p>
-        <Link href="/auth/sign-up" className={styles.ctaButtonLarge}>
-          Commencer maintenant
-        </Link>
-      </section>
-
-      <footer className={styles.footer}>
-        <p>&copy; 2024 Ottonowmy Idea. Tous droits réservés.</p>
+      <footer style={{ padding: '2rem', textAlign: 'center', borderTop: '1px solid var(--border)', color: 'var(--secondary)' }}>
+        <p>&copy; 2024 Ottonowmy Idea</p>
       </footer>
-    </main>
+    </div>
   );
 }
