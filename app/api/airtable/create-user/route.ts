@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createUser, checkPseudoExists } from '@/lib/airtable';
+import { createUser, checkPseudoExists } from '@/lib/airtable-config';
 
 export async function POST(request: NextRequest) {
   try {

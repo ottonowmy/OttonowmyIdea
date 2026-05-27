@@ -21,6 +21,6 @@
     "plugins": [{ "name": "next" }],
     "allowJs": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "lib/airtable-config.js"],
   "exclude": ["node_modules"]
 }
