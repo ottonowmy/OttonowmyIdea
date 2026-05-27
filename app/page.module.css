@@ -1,273 +1,239 @@
-.main {
-  overflow-x: hidden;
-}
-
-/* ============================================================
-   HERO SECTION
-   ============================================================ */
-
-.hero {
-  padding: 100px 0;
-  background: linear-gradient(
-    135deg,
-    var(--bg) 0%,
-    var(--accent-light) 100%
-  );
-  position: relative;
-  overflow: hidden;
-}
-
-.hero > .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.heroContent h1 {
-  font-size: var(--font-size-4xl);
-  margin-bottom: var(--space-lg);
-  color: var(--primary);
-}
-
-.heroContent p {
-  font-size: var(--font-size-lg);
-  color: var(--text-muted);
-  margin-bottom: var(--space-2xl);
-  max-width: 500px;
-}
-
-.ctaButtons {
-  display: flex;
-  gap: var(--space-lg);
-  flex-wrap: wrap;
-}
-
-.ctaButtons .btn {
-  display: inline-flex;
-}
-
-/* Hero Visual */
-.heroVisual {
-  position: relative;
-  height: 400px;
-  perspective: 1000px;
-}
-
-.card1,
-.card2,
-.card3 {
-  position: absolute;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-lg);
-  box-shadow: var(--shadow-lg);
+.container {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 100;
+}
+
+.headerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: var(--space-md);
+}
+
+.header h1 {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.signInLink {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  padding: 8px 16px;
+  transition: color 0.3s;
+}
+
+.signInLink:hover {
+  color: #1a1a1a;
+}
+
+.hero {
+  padding: 120px 20px 100px;
+  background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+  border-bottom: 1px solid #e5e5e5;
   text-align: center;
-  animation: float 3s ease-in-out infinite;
-  width: 140px;
 }
 
-.card1 {
-  top: 30px;
-  right: 20px;
-  animation-delay: 0s;
+.hero h2 {
+  font-size: 56px;
+  margin-bottom: 20px;
+  color: #1a1a1a;
 }
 
-.card2 {
-  top: 200px;
-  right: -20px;
-  animation-delay: 0.5s;
+.hero p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.card3 {
-  bottom: 40px;
-  right: 120px;
-  animation-delay: 1s;
+.ctaButton {
+  display: inline-block;
+  padding: 14px 40px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  transition: all 0.3s;
 }
 
-.cardIcon {
-  width: 40px;
-  height: 40px;
+.ctaButton:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+
+.sectionContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.how {
+  padding: 80px 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.how h2 {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.step {
+  text-align: center;
+}
+
+.num {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #1a1a1a;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-light);
-  border-radius: var(--radius-lg);
-  color: var(--accent);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
 }
 
-.cardIcon svg {
-  width: 24px;
-  height: 24px;
+.step h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+.step p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
 }
-
-/* ============================================================
-   FEATURES SECTION
-   ============================================================ */
 
 .features {
-  padding: 100px 0;
-  background: var(--bg);
+  padding: 80px 20px;
+  background: #f8f8f8;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .features h2 {
+  font-size: 40px;
   text-align: center;
-  margin-bottom: 4rem;
-  font-size: var(--font-size-3xl);
+  margin-bottom: 60px;
 }
 
-.featuresGrid {
+.featuresList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 24px;
 }
 
-.features .card {
-  position: relative;
-  padding: var(--space-2xl);
+.feature {
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  transition: all 0.3s;
 }
 
-.featureNumber {
-  font-size: var(--font-size-2xl);
-  font-weight: 900;
-  color: var(--accent-light);
-  margin-bottom: var(--space-md);
-  line-height: 1;
+.feature:hover {
+  border-color: #1a1a1a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-.features h3 {
-  margin-bottom: var(--space-md);
-  font-size: var(--font-size-xl);
+.feature h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
-.features p {
-  font-size: var(--font-size-sm);
-  margin: 0;
+.feature p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
 }
 
-/* ============================================================
-   STATS SECTION
-   ============================================================ */
-
-.stats {
-  padding: 100px 0;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: white;
-}
-
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 3rem;
+.cta {
+  padding: 80px 20px;
   text-align: center;
+  border-bottom: 1px solid #e5e5e5;
 }
 
-.statNumber {
-  font-size: 3.5rem;
-  font-weight: 900;
-  color: var(--accent);
-  margin-bottom: var(--space-md);
+.cta h2 {
+  font-size: 40px;
+  margin-bottom: 16px;
 }
 
-.stats p {
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
-  font-size: var(--font-size-lg);
+.cta p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 40px;
 }
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+.ctaButtonLarge {
+  display: inline-block;
+  padding: 16px 48px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+
+.ctaButtonLarge:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
 
 .footer {
-  padding: var(--space-2xl) 0;
-  background: var(--primary);
-  color: white;
+  padding: 32px 20px;
+  background: #f8f8f8;
+  border-top: 1px solid #e5e5e5;
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 1024px) {
-  .hero > .container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .heroVisual {
-    display: none;
-  }
-
-  .hero {
-    padding: 80px 0;
-  }
+  font-size: 12px;
+  color: #999;
+  margin-top: auto;
 }
 
 @media (max-width: 768px) {
-  .heroContent h1 {
-    font-size: var(--font-size-3xl);
+  .hero h2 {
+    font-size: 32px;
   }
 
-  .heroContent p {
-    font-size: var(--font-size-base);
+  .hero, .how, .features, .cta {
+    padding: 60px 20px;
   }
 
-  .ctaButtons {
-    flex-direction: column;
+  .how h2, .features h2, .cta h2 {
+    font-size: 28px;
   }
 
-  .ctaButtons .btn {
-    width: 100%;
-  }
-
-  .features,
-  .stats {
-    padding: 60px 0;
-  }
-
-  .features h2 {
-    margin-bottom: 2rem;
-  }
-
-  .featuresGrid {
-    gap: 1rem;
-  }
-
-  .features .card {
-    padding: var(--space-lg);
-  }
-
-  .featureNumber {
-    font-size: var(--font-size-lg);
-  }
-
-  .features h3 {
-    font-size: var(--font-size-lg);
-  }
-
-  .statNumber {
-    font-size: 2rem;
+  .stepsGrid, .featuresList {
+    grid-template-columns: 1fr;
   }
 }

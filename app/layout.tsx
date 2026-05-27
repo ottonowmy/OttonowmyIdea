@@ -1,12 +1,10 @@
-import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
-import { Navbar } from '@/components/Navbar';
-import '@/styles/globals.css';
+import { ClerkProvider } from '@clerk/nextjs';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Ottonowmy Idea - Partagez vos idées',
-  description: 'Une plateforme pour explorer et créer des idées d\'applications',
-  viewport: 'width=device-width, initial-scale=1',
+  title: 'Ottonowmy Idea',
+  description: 'Trouve l\'inspiration, partage tes idées',
 };
 
 export default function RootLayout({
@@ -17,13 +15,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="fr">
-        <head>
-          <link rel="icon" href="/favicon.ico" />
-        </head>
-        <body>
-          <Navbar />
-          {children}
-        </body>
+        <body>{children}</body>
       </html>
     </ClerkProvider>
   );

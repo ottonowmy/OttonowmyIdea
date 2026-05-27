@@ -1,0 +1,215 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 32px;
+  margin: 0;
+}
+
+.createBtn {
+  padding: 12px 20px;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  transition: all 0.3s;
+}
+
+.createBtn:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+}
+
+.filterBtn {
+  padding: 8px 16px;
+  background: #f8f8f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.filterBtn:hover {
+  border-color: #1a1a1a;
+}
+
+.filterBtn.active {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.projectCard {
+  padding: 20px;
+  background: #f8f8f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.projectCard:hover {
+  background: #fff;
+  border-color: #1a1a1a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cardHeader h3 {
+  font-size: 16px;
+  color: #1a1a1a;
+  margin: 0;
+  flex: 1;
+}
+
+.badges {
+  display: flex;
+  gap: 6px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #e5e5e5;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.badge.privé {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.badge.public {
+  background: #d4edda;
+  color: #155724;
+}
+
+.badge.draft {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.badge.published {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.badge.launched {
+  background: #d4edda;
+  color: #155724;
+}
+
+.desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+  flex: 1;
+  margin: 0;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.stats span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.stats svg {
+  width: 14px;
+  height: 14px;
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty p {
+  font-size: 16px;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.emptyBtn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  transition: all 0.3s;
+}
+
+.emptyBtn:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .createBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .projectsGrid {
+    grid-template-columns: 1fr;
+  }
+}

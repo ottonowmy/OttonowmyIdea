@@ -1,0 +1,194 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.header h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.header p {
+  font-size: 16px;
+  color: #666;
+}
+
+.searchBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.searchInput {
+  padding: 12px 16px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  background: #fafafa;
+}
+
+.searchButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.searchBtn,
+.resetBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.searchBtn {
+  background: #1a1a1a;
+  color: #fff;
+  flex: 1;
+}
+
+.searchBtn:hover:not(:disabled) {
+  background: #333;
+}
+
+.searchBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.resetBtn {
+  background: #e5e5e5;
+  color: #666;
+}
+
+.resetBtn:hover {
+  background: #d0d0d0;
+}
+
+.ideasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.ideaCard {
+  padding: 20px;
+  background: #f8f8f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ideaCard:hover {
+  background: #fff;
+  border-color: #1a1a1a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.cardHeader h3 {
+  font-size: 16px;
+  color: #1a1a1a;
+  flex: 1;
+  margin: 0;
+}
+
+.privateBadge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #e5e5e5;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.stats {
+  display: flex;
+  gap: 20px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e5e5;
+  font-size: 12px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.value {
+  font-weight: 700;
+  color: #1a1a1a;
+  font-size: 14px;
+}
+
+.viewBtn {
+  padding: 8px 12px;
+  background: #1a1a1a;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.ideaCard:hover .viewBtn {
+  background: #333;
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .ideasGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .searchInput {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,285 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+}
+
+.backLink {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+  grid-column: 1 / -1;
+  transition: color 0.3s;
+}
+
+.backLink:hover {
+  color: #1a1a1a;
+}
+
+.ideaHeader {
+  grid-column: 1 / -1;
+  margin-bottom: 20px;
+}
+
+.ideaHeader h1 {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.ideaHeader p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.content {
+  display: contents;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.voteSection {
+  padding: 24px;
+  background: #f8f8f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+}
+
+.voteSection h2 {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.voteButtons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.voteBtn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e5e5e5;
+  background: #fff;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.voteBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.voteBtn:hover {
+  border-color: #1a1a1a;
+}
+
+.likeBtn.active {
+  background: #d4f4dd;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.dislikeBtn.active {
+  background: #f8d7da;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.publicStats {
+  padding: 12px;
+  background: #fff;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.publicStats p {
+  margin: 0;
+}
+
+.publicStats strong {
+  font-size: 18px;
+  color: #1a1a1a;
+}
+
+.commentsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.commentsSection h2 {
+  font-size: 20px;
+}
+
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: #f8f8f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+}
+
+.commentForm textarea {
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  resize: vertical;
+  transition: all 0.3s;
+}
+
+.commentForm textarea:focus {
+  outline: none;
+  border-color: #1a1a1a;
+  background: #fff;
+}
+
+.submitBtn {
+  padding: 10px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #333;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comment {
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.commentHeader strong {
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.date {
+  color: #999;
+  font-size: 12px;
+}
+
+.comment p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.sidebar {
+  grid-column: 2;
+  grid-row: 1 / -1;
+}
+
+.statsBox {
+  position: sticky;
+  top: 100px;
+  padding: 20px;
+  background: #f8f8f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+}
+
+.statsBox h3 {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.statItem {
+  margin-bottom: 16px;
+}
+
+.statItem span {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #666;
+}
+
+.bar {
+  height: 20px;
+  background: #e5e5e5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  transition: all 0.3s;
+}
+
+.percentage {
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #1a1a1a;
+  margin-top: 12px !important;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    grid-column: 1;
+  }
+
+  .statsBox {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .ideaHeader h1 {
+    font-size: 24px;
+  }
+
+  .voteButtons {
+    flex-direction: column;
+  }
+}
