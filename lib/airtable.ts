@@ -1,37 +1,18 @@
-/**
- * AIRTABLE CONFIGURATION - REST API
- * No external dependencies - Uses native fetch
- * Fully typed and error-handled
- */
-
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
 if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
-  console.error('❌ Missing Airtable credentials in .env.local');
+  console.error('Missing Airtable credentials in .env.local');
 }
 
 const BASE_URL = 'https://api.airtable.com/v0';
 
-// Helper to escape formula values
 function escapeFormula(str: string): string {
   return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 }
 
-interface AirtableError {
-  error?: {
-    type: string;
-    message: string;
-  };
-}
-
-// Generic fetch wrapper
-async function airtableFetch(
-  endpoint: string,
-  options: RequestInit = {}
-): Promise<any> {
+async function airtableFetch(endpoint: string, options: RequestInit = {}): Promise<any> {
   const url = `${BASE_URL}/${AIRTABLE_BASE_ID}/${endpoint}`;
-
   const headers: HeadersInit = {
     Authorization: `Bearer ${AIRTABLE_API_KEY}`,
     'Content-Type': 'application/json',
@@ -42,22 +23,17 @@ async function airtableFetch(
     const response = await fetch(url, { ...options, headers });
 
     if (!response.ok) {
-      const errorData: AirtableError = await response.json().catch(() => ({}));
-      const errorMsg =
-        errorData.error?.message || response.statusText || 'Unknown error';
+      const errorData: any = await response.json().catch(() => ({}));
+      const errorMsg = errorData.error?.message || response.statusText || 'Unknown error';
       throw new Error(`Airtable ${response.status}: ${errorMsg}`);
     }
 
     return await response.json();
   } catch (error) {
-    console.error('🔴 Airtable Error:', error);
+    console.error('Airtable Error:', error);
     throw error;
   }
 }
-
-// ============================================================
-// USERS TABLE
-// ============================================================
 
 export async function getUserByClerkId(clerkId: string) {
   const formula = `{clerkId}="${escapeFormula(clerkId)}"`;
@@ -107,10 +83,6 @@ export async function updateUserEclairs(userId: string, eclairs: number) {
   });
   return response;
 }
-
-// ============================================================
-// IDEAS TABLE
-// ============================================================
 
 export async function getAllPublicIdeas() {
   const formula = `{visibility}="Public"`;
@@ -169,41 +141,6 @@ export async function updateIdeaVotes(
   return response;
 }
 
-// ============================================================
-// VOTES TABLE
-// ============================================================
-
-export async function getUserVote(ideaRecordId: string, userRecordId: string) {
-  const formula = `AND({ideaId}="${escapeFormula(ideaRecordId)}",{userId}="${escapeFormula(userRecordId)}")`;
-  const result = await airtableFetch(
-    `Votes?filterByFormula=${encodeURIComponent(formula)}&maxRecords=1`
-  );
-  return result.records?.[0] || null;
-}
-
-export async function createVote(data: {
-  ideaId: string;
-  userId: string;
-  voteType: 'like' | 'dislike';
-}) {
-  const response = await airtableFetch('Votes', {
-    method: 'POST',
-    body: JSON.stringify({
-      fields: {
-        ideaId: [data.ideaId],
-        userId: [data.userId],
-        voteType: data.voteType,
-        createdAt: new Date().toISOString(),
-      },
-    }),
-  });
-  return response;
-}
-
-// ============================================================
-// COMMENTS TABLE
-// ============================================================
-
 export async function getIdeaComments(ideaRecordId: string) {
   const formula = `FIND("${escapeFormula(ideaRecordId)}",CONCATENATE({ideaId}))>0`;
   const result = await airtableFetch(
@@ -226,6 +163,33 @@ export async function createComment(data: {
         pseudo: data.pseudo,
         ideaId: [data.ideaId],
         userId: [data.userId],
+        createdAt: new Date().toISOString(),
+      },
+    }),
+  });
+  return response;
+}
+
+export async function getUserVote(ideaRecordId: string, userRecordId: string) {
+  const formula = `AND({ideaId}="${escapeFormula(ideaRecordId)}",{userId}="${escapeFormula(userRecordId)}")`;
+  const result = await airtableFetch(
+    `Votes?filterByFormula=${encodeURIComponent(formula)}&maxRecords=1`
+  );
+  return result.records?.[0] || null;
+}
+
+export async function createVote(data: {
+  ideaId: string;
+  userId: string;
+  voteType: 'like' | 'dislike';
+}) {
+  const response = await airtableFetch('Votes', {
+    method: 'POST',
+    body: JSON.stringify({
+      fields: {
+        ideaId: [data.ideaId],
+        userId: [data.userId],
+        voteType: data.voteType,
         createdAt: new Date().toISOString(),
       },
     }),

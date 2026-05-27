@@ -3,6 +3,8 @@
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { Icons } from '@/components/Icons';
+import styles from './setup.module.css';
 
 export default function SetupPage() {
   const { user, isLoaded } = useUser();
@@ -32,7 +34,7 @@ export default function SetupPage() {
         setError('');
       }
     } catch (e) {
-      console.error('Error checking pseudo:', e);
+      console.error('Error:', e);
     } finally {
       setChecking(false);
     }
@@ -47,12 +49,12 @@ export default function SetupPage() {
     }
 
     if (pseudo.length < 3) {
-      setError('Le pseudo doit avoir au moins 3 caractères');
+      setError('Au minimum 3 caractères');
       return;
     }
 
     if (pseudo.length > 30) {
-      setError('Le pseudo ne doit pas dépasser 30 caractères');
+      setError('Maximum 30 caractères');
       return;
     }
 
@@ -60,7 +62,6 @@ export default function SetupPage() {
     setError('');
 
     try {
-      // Check if pseudo exists
       const checkRes = await fetch(`/api/airtable/check-pseudo?pseudo=${encodeURIComponent(pseudo)}`);
       const checkData = await checkRes.json();
 
@@ -70,7 +71,6 @@ export default function SetupPage() {
         return;
       }
 
-      // Create user in Airtable
       const res = await fetch('/api/airtable/create-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -83,119 +83,79 @@ export default function SetupPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || 'Failed to create user');
+        throw new Error(data.error || 'Erreur');
       }
 
-      // Success - redirect to dashboard
       router.push('/dashboard');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur lors de la création du compte');
-      console.error(err);
+      setError(err instanceof Error ? err.message : 'Erreur');
     } finally {
       setLoading(false);
     }
   };
 
   if (!isLoaded) {
-    return <div style={{ textAlign: 'center', padding: '2rem' }}>Chargement...</div>;
+    return <div className={styles.loading}>Chargement...</div>;
   }
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #fff 0%, #f8f8f8 100%)',
-      padding: '1rem',
-    }}>
-      <div style={{
-        background: 'white',
-        padding: '3rem',
-        borderRadius: 'var(--radius)',
-        border: '1px solid var(--border)',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-        maxWidth: '400px',
-        width: '100%',
-      }}>
-        <h1 style={{ marginBottom: '0.5rem', fontSize: '2rem', textAlign: 'center' }}>Bienvenue! 👋</h1>
-        <p style={{ textAlign: 'center', marginBottom: '2rem', color: 'var(--secondary)' }}>
-          Choisissez un pseudo pour votre profil
-        </p>
-
-        {error && (
-          <div style={{
-            padding: '1rem',
-            background: '#fee',
-            border: '1px solid #fcc',
-            borderRadius: 'var(--radius)',
-            color: '#c33',
-            marginBottom: '1.5rem',
-            fontSize: '0.9rem',
-          }}>
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <div style={{ position: 'relative' }}>
-            <label htmlFor="pseudo" style={{
-              display: 'block',
-              fontSize: '0.85rem',
-              fontWeight: '600',
-              textTransform: 'uppercase',
-              marginBottom: '0.5rem',
-              letterSpacing: '0.3px',
-            }}>
-              Votre pseudo *
-            </label>
-            <input
-              type="text"
-              id="pseudo"
-              value={pseudo}
-              onChange={(e) => handlePseudoChange(e.target.value)}
-              placeholder="Ex: DevMaster2024"
-              maxLength={30}
-              required
-              disabled={loading}
-              style={{
-                paddingRight: '3rem',
-              }}
-            />
-            <span style={{
-              position: 'absolute',
-              right: '1rem',
-              top: '2.5rem',
-              fontSize: '0.85rem',
-              color: 'var(--secondary)',
-            }}>
-              {pseudo.length}/30
-            </span>
-            {checking && (
-              <span style={{ fontSize: '0.85rem', color: 'var(--secondary)', marginTop: '0.25rem' }}>
-                ⏳ Vérification...
-              </span>
-            )}
+    <div className={styles.setupPage}>
+      <div className={styles.setupContainer}>
+        <div className={styles.setupBox}>
+          <div className={styles.header}>
+            <div className={styles.badge}>Étape 1 / 1</div>
+            <h1>Choisissez votre pseudo</h1>
+            <p>C'est comme votre nom d'utilisateur sur la plateforme</p>
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={loading || checking}
-            style={{ padding: '0.75rem', width: '100%' }}
-          >
-            {loading ? '⏳ Création...' : '✓ Continuer'}
-          </button>
-        </form>
+          {error && (
+            <div className={styles.error}>
+              <span className={styles.errorIcon}>{Icons.error}</span>
+              <span>{error}</span>
+            </div>
+          )}
 
-        <p style={{
-          textAlign: 'center',
-          fontSize: '0.85rem',
-          color: 'var(--secondary)',
-          marginTop: '1.5rem',
-        }}>
-          Vous pourrez modifier votre pseudo dans les paramètres
-        </p>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.formGroup}>
+              <label htmlFor="pseudo">Votre pseudo</label>
+              <div className={styles.inputWrapper}>
+                <input
+                  type="text"
+                  id="pseudo"
+                  value={pseudo}
+                  onChange={(e) => handlePseudoChange(e.target.value)}
+                  placeholder="DevMaster2024"
+                  maxLength={30}
+                  required
+                  disabled={loading}
+                  className={styles.input}
+                />
+                {checking && (
+                  <span className={styles.checking}>
+                    <span className={styles.loader} />
+                  </span>
+                )}
+              </div>
+              <div className={styles.charCount}>
+                {pseudo.length}/30 caractères
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || checking}
+              className="btn btn-primary btn-lg"
+              style={{ width: '100%' }}
+            >
+              {Icons.check}
+              {loading ? 'Création en cours...' : 'Continuer'}
+            </button>
+          </form>
+
+          <div className={styles.info}>
+            <p>Vous recevrez <strong>2500 éclairs</strong> pour démarrer</p>
+          </div>
+        </div>
       </div>
     </div>
   );

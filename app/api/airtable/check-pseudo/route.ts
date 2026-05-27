@@ -10,12 +10,11 @@ export async function GET(request: NextRequest) {
     }
 
     const exists = await checkPseudoExists(pseudo);
-
     return NextResponse.json({ exists });
   } catch (error) {
-    console.error('❌ Error checking pseudo:', error);
+    console.error('Error:', error);
     return NextResponse.json(
-      { error: 'Failed to check pseudo', details: error instanceof Error ? error.message : '' },
+      { error: 'Failed', details: error instanceof Error ? error.message : '' },
       { status: 500 }
     );
   }

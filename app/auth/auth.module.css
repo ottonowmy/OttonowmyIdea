@@ -1,0 +1,109 @@
+.authPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg) 100%);
+}
+
+.authContainer {
+  width: 100%;
+  max-width: 420px;
+}
+
+.authBox {
+  background: var(--bg);
+  padding: var(--space-3xl);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+}
+
+.authBox h1 {
+  font-size: var(--font-size-2xl);
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  color: var(--primary);
+}
+
+.authBox :global(.cl-rootBox) {
+  width: 100%;
+}
+
+.authBox :global(.cl-card) {
+  width: 100%;
+  background: transparent;
+  border: none;
+  box-shadow: none !important;
+}
+
+.authBox :global(.cl-form) {
+  width: 100%;
+}
+
+.authBox :global(.cl-formField) {
+  margin-bottom: var(--space-lg);
+}
+
+.authBox :global(.cl-formFieldInput) {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 0.625rem 0.75rem;
+  font-size: var(--font-size-sm);
+}
+
+.authBox :global(.cl-formFieldInput:focus) {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.authBox :global(.cl-button) {
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.authBox :global(.cl-button:hover) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.authBox :global(.cl-authDiv) {
+  width: 100%;
+}
+
+.authBox :global(.cl-footer) {
+  text-align: center;
+  margin-top: var(--space-lg);
+  font-size: var(--font-size-sm);
+}
+
+.authBox :global(.cl-footer a) {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.authBox :global(.cl-footer a:hover) {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .authBox {
+    padding: var(--space-2xl);
+  }
+
+  .authBox h1 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-lg);
+  }
+}

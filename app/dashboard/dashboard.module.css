@@ -1,0 +1,145 @@
+.dashboard {
+  padding: 0;
+}
+
+.hero {
+  padding: 60px 0;
+  background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero h1 {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-sm);
+  color: var(--primary);
+}
+
+.hero p {
+  font-size: var(--font-size-lg);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.hero strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.cards {
+  padding: 60px 0;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.cards .card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.cards .card h3 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+}
+
+.cards .card p {
+  margin: 0;
+}
+
+.cardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: var(--accent-light);
+  border-radius: var(--radius-lg);
+  color: var(--accent);
+}
+
+.cardIcon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.cta {
+  padding: 60px 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
+
+.ctaBox {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 4rem;
+  border-radius: var(--radius-2xl);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.ctaIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-lg);
+  color: var(--accent);
+}
+
+.ctaIcon svg {
+  width: 32px;
+  height: 32px;
+  color: white;
+}
+
+.ctaBox h2 {
+  margin: 0;
+  color: white;
+}
+
+.ctaBox p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-lg);
+}
+
+.ctaBox .btn {
+  margin-top: var(--space-md);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 0;
+  }
+
+  .hero h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .cards,
+  .cta {
+    padding: 40px 0;
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .ctaBox {
+    padding: 2rem;
+  }
+
+  .ctaBox h2 {
+    font-size: var(--font-size-2xl);
+  }
+}

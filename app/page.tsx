@@ -1,54 +1,105 @@
 'use client';
 
 import Link from 'next/link';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignedOut } from '@clerk/nextjs';
+import { Icons } from '@/components/Icons';
+import styles from './page.module.css';
 
 export default function Home() {
   return (
-    <div>
-      <nav style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        padding: '1rem 2rem',
-        borderBottom: '1px solid var(--border)',
-        background: 'var(--bg)'
-      }}>
-        <h1 style={{ margin: 0, fontSize: '1.5rem' }}>💡 Ottonowmy</h1>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-          <SignedOut>
-            <Link href="/auth/sign-in" className="btn btn-secondary">Connexion</Link>
-            <Link href="/auth/sign-up" className="btn btn-primary">S'inscrire</Link>
-          </SignedOut>
-          <SignedIn>
-            <Link href="/dashboard" className="btn btn-primary">Dashboard</Link>
-            <UserButton />
-          </SignedIn>
-        </div>
-      </nav>
-
-      <section style={{ padding: '6rem 2rem', textAlign: 'center', background: 'linear-gradient(135deg, #fff 0%, #f8f8f8 100%)' }}>
+    <main className={styles.main}>
+      {/* Hero Section */}
+      <section className={styles.hero}>
         <div className="container">
-          <h1>Partagez vos idées d'apps</h1>
-          <p style={{ fontSize: '1.2rem', marginBottom: '2rem' }}>
-            Une plateforme pour explorer et créer ensemble
-          </p>
-          <SignedOut>
-            <Link href="/auth/sign-up" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
-              Commencer →
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <Link href="/dashboard" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
-              Aller au Dashboard →
-            </Link>
-          </SignedIn>
+          <div className={styles.heroContent}>
+            <h1>Partagez vos idées d'apps</h1>
+            <p>Une plateforme communautaire pour explorer, créer et discuter les meilleures idées d'applications.</p>
+            <div className={styles.ctaButtons}>
+              <SignedOut>
+                <Link href="/auth/sign-up" className="btn btn-primary btn-lg">
+                  {Icons.arrow_right}
+                  Commencer gratuitement
+                </Link>
+              </SignedOut>
+              <Link href="/dashboard/ideas" className="btn btn-secondary btn-lg">
+                {Icons.search}
+                Explorer les idées
+              </Link>
+            </div>
+          </div>
+          
+          <div className={styles.heroVisual}>
+            <div className={styles.card1}>
+              <div className={styles.cardIcon}>{Icons.lightbulb}</div>
+              <p>E-commerce</p>
+            </div>
+            <div className={styles.card2}>
+              <div className={styles.cardIcon}>{Icons.users}</div>
+              <p>Social Network</p>
+            </div>
+            <div className={styles.card3}>
+              <div className={styles.cardIcon}>{Icons.zap}</div>
+              <p>AI Tool</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <footer style={{ padding: '2rem', textAlign: 'center', borderTop: '1px solid var(--border)', color: 'var(--secondary)' }}>
-        <p>&copy; 2024 Ottonowmy Idea</p>
+      {/* Features Section */}
+      <section className={styles.features}>
+        <div className="container">
+          <h2>Comment ça fonctionne</h2>
+          <div className={styles.featuresGrid}>
+            <div className="card">
+              <div className={styles.featureNumber}>01</div>
+              <h3>S'inscrire</h3>
+              <p>Créez votre compte avec votre pseudo et recevez 2500 éclairs pour démarrer.</p>
+            </div>
+            <div className="card">
+              <div className={styles.featureNumber}>02</div>
+              <h3>Explorer</h3>
+              <p>Découvrez les idées publiques de la communauté et commentez vos favoris.</p>
+            </div>
+            <div className="card">
+              <div className={styles.featureNumber}>03</div>
+              <h3>Créer</h3>
+              <p>Proposez vos idées (coût: 700 éclairs) publiquement ou en privé.</p>
+            </div>
+            <div className="card">
+              <div className={styles.featureNumber}>04</div>
+              <h3>Discuter</h3>
+              <p>Recevez des retours et gagnez 15 éclairs par commentaire utile.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className={styles.stats}>
+        <div className="container">
+          <div className={styles.statsGrid}>
+            <div>
+              <div className={styles.statNumber}>500+</div>
+              <p>Idées créées</p>
+            </div>
+            <div>
+              <div className={styles.statNumber}>1.2K</div>
+              <p>Utilisateurs actifs</p>
+            </div>
+            <div>
+              <div className={styles.statNumber}>5K+</div>
+              <p>Commentaires</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className="container">
+          <p>© 2024 Ottonowmy Idea. Tous droits réservés.</p>
+        </div>
       </footer>
-    </div>
+    </main>
   );
 }

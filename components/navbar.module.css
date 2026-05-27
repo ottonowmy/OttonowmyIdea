@@ -1,0 +1,134 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--primary);
+  transition: color var(--transition-fast);
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: var(--accent);
+}
+
+.logoIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  border-radius: var(--radius-lg);
+  color: white;
+  font-weight: 900;
+  font-size: var(--font-size-lg);
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-left: var(--space-3xl);
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: var(--accent);
+}
+
+.navLink svg {
+  width: 20px;
+  height: 20px;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.eclairs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--accent-light);
+  border-radius: var(--radius-lg);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+
+.eclairs svg {
+  width: 18px;
+  height: 18px;
+}
+
+.settingsBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  padding: 0;
+}
+
+.settingsBtn:hover {
+  background: var(--bg-tertiary);
+  color: var(--accent);
+}
+
+.settingsBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+
+  .navLink span {
+    display: none;
+  }
+
+  .settingsBtn {
+    width: 36px;
+    height: 36px;
+  }
+}

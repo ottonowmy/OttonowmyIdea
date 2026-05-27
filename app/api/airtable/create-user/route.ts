@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate pseudo
     if (pseudo.length < 3 || pseudo.length > 30) {
       return NextResponse.json(
         { error: 'Pseudo must be between 3 and 30 characters' },
@@ -20,7 +19,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if pseudo already exists
     const exists = await checkPseudoExists(pseudo);
     if (exists) {
       return NextResponse.json(
@@ -29,7 +27,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user
     const result = await createUser({
       clerkId,
       email,
@@ -47,7 +44,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('❌ Error creating user:', error);
+    console.error('Error:', error);
     return NextResponse.json(
       { error: 'Failed to create user', details: error instanceof Error ? error.message : '' },
       { status: 500 }
