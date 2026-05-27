@@ -1,100 +1,104 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { SignedOut } from '@clerk/nextjs';
+import { Icons } from '@/components/Icons';
 import styles from './page.module.css';
 
 export default function Home() {
-  const { isLoaded, isSignedIn } = useUser();
-  const router = useRouter();
-
-  if (isLoaded && isSignedIn) {
-    router.push('/dashboard');
-    return null;
-  }
-
   return (
-    <main className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <h1>Ottonowmy Idea</h1>
-          <Link href="/auth/sign-in" className={styles.signInLink}>
-            Se connecter
-          </Link>
-        </div>
-      </header>
-
+    <main className={styles.main}>
+      {/* Hero Section */}
       <section className={styles.hero}>
-        <h2>Trouve l'inspiration, partage tes idées d'app</h2>
-        <p>Une plateforme pour explorer, créer et développer les meilleures idées d'applications</p>
-        <Link href="/auth/sign-up" className={styles.ctaButton}>
-          Commencer à découvrir
-        </Link>
-      </section>
-
-      <section className={styles.how}>
-        <div className={styles.sectionContainer}>
-          <h2>Découvre. Inspire. Lance.</h2>
-          <div className={styles.stepsGrid}>
-            <div className={styles.step}>
-              <div className={styles.num}>1</div>
-              <h3>Explore les idées</h3>
-              <p>Parcourez les projets d'applications en développement et trouvez l'inspiration.</p>
+        <div className="container">
+          <div className={styles.heroContent}>
+            <h1>Partagez vos idées d'apps</h1>
+            <p>Une plateforme communautaire pour explorer, créer et discuter les meilleures idées d'applications.</p>
+            <div className={styles.ctaButtons}>
+              <SignedOut>
+                <Link href="/auth/sign-up" className="btn btn-primary btn-lg">
+                  {Icons.arrow_right}
+                  Commencer gratuitement
+                </Link>
+              </SignedOut>
+              <Link href="/dashboard/ideas" className="btn btn-secondary btn-lg">
+                {Icons.search}
+                Explorer les idées
+              </Link>
             </div>
-            <div className={styles.step}>
-              <div className={styles.num}>2</div>
-              <h3>Donnez des avis</h3>
-              <p>Partagez vos retours avec notes et témoignages pour aider les créateurs.</p>
+          </div>
+          
+          <div className={styles.heroVisual}>
+            <div className={styles.card1}>
+              <div className={styles.cardIcon}>{Icons.lightbulb}</div>
+              <p>E-commerce</p>
             </div>
-            <div className={styles.step}>
-              <div className={styles.num}>3</div>
-              <h3>Gagnez des éclairs</h3>
-              <p>Chaque avis utile vous rapporte des éclairs à utiliser pour vos projets.</p>
+            <div className={styles.card2}>
+              <div className={styles.cardIcon}>{Icons.users}</div>
+              <p>Social Network</p>
             </div>
-            <div className={styles.step}>
-              <div className={styles.num}>4</div>
-              <h3>Créez votre app</h3>
-              <p>Utilisez 700 éclairs pour publier votre propre idée d'application.</p>
+            <div className={styles.card3}>
+              <div className={styles.cardIcon}>{Icons.zap}</div>
+              <p>AI Tool</p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Features Section */}
       <section className={styles.features}>
-        <div className={styles.sectionContainer}>
-          <h2>Pourquoi Ottonowmy Idea</h2>
-          <div className={styles.featuresList}>
-            <div className={styles.feature}>
-              <h3>Pour les développeurs</h3>
-              <p>Partagez vos idées d'apps et obtenez des retours constructifs de la communauté</p>
+        <div className="container">
+          <h2>Comment ça fonctionne</h2>
+          <div className={styles.featuresGrid}>
+            <div className="card">
+              <div className={styles.featureNumber}>01</div>
+              <h3>S'inscrire</h3>
+              <p>Créez votre compte avec votre pseudo et recevez 2500 éclairs pour démarrer.</p>
             </div>
-            <div className={styles.feature}>
-              <h3>Monnaie virtuelle</h3>
-              <p>Gagnez des éclairs en donnant des avis, dépensez-les pour lancer vos projets</p>
+            <div className="card">
+              <div className={styles.featureNumber}>02</div>
+              <h3>Explorer</h3>
+              <p>Découvrez les idées publiques de la communauté et commentez vos favoris.</p>
             </div>
-            <div className={styles.feature}>
-              <h3>Communauté active</h3>
-              <p>Connectez-vous avec d'autres développeurs passionnés par les nouvelles idées</p>
+            <div className="card">
+              <div className={styles.featureNumber}>03</div>
+              <h3>Créer</h3>
+              <p>Proposez vos idées (coût: 700 éclairs) publiquement ou en privé.</p>
             </div>
-            <div className={styles.feature}>
-              <h3>Transparence totale</h3>
-              <p>Visibilité publique ou privée pour chaque projet selon vos préférences</p>
+            <div className="card">
+              <div className={styles.featureNumber}>04</div>
+              <h3>Discuter</h3>
+              <p>Recevez des retours et gagnez 15 éclairs par commentaire utile.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className={styles.cta}>
-        <h2>Prêt à partager votre idée d'app?</h2>
-        <p>Rejoignez une communauté de développeurs où chaque idée compte</p>
-        <Link href="/auth/sign-up" className={styles.ctaButtonLarge}>
-          Commencer maintenant
-        </Link>
+      {/* Stats Section */}
+      <section className={styles.stats}>
+        <div className="container">
+          <div className={styles.statsGrid}>
+            <div>
+              <div className={styles.statNumber}>500+</div>
+              <p>Idées créées</p>
+            </div>
+            <div>
+              <div className={styles.statNumber}>1.2K</div>
+              <p>Utilisateurs actifs</p>
+            </div>
+            <div>
+              <div className={styles.statNumber}>5K+</div>
+              <p>Commentaires</p>
+            </div>
+          </div>
+        </div>
       </section>
 
+      {/* Footer */}
       <footer className={styles.footer}>
-        <p>&copy; 2024 Ottonowmy Idea. Tous droits réservés.</p>
+        <div className="container">
+          <p>© 2024 Ottonowmy Idea. Tous droits réservés.</p>
+        </div>
       </footer>
     </main>
   );
