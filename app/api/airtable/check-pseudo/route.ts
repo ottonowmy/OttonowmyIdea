@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { checkPseudoExists } from '@/lib/airtable-config';
+import { checkPseudoExists } from '@/lib/airtable';
 
 export async function GET(request: NextRequest) {
   try {
