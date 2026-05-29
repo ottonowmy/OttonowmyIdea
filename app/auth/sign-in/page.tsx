@@ -10,7 +10,7 @@ export default function SignInPage() {
           <SignIn
             path="/auth/sign-in"
             routing="path"
-            redirect_url="/auth/setup"
+            fallbackRedirectUrl="/auth/setup"
             appearance={{
               elements: {
                 rootBox: { width: '100%' },

@@ -10,7 +10,7 @@ export default function SignUpPage() {
           <SignUp
             path="/auth/sign-up"
             routing="path"
-            redirect_url="/auth/setup"
+            fallbackRedirectUrl="/auth/setup"
             appearance={{
               elements: {
                 rootBox: { width: '100%' },
