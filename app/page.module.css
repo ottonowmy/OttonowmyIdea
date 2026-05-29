@@ -7,34 +7,36 @@
    ============================================================ */
 
 .hero {
-  padding: 100px 0;
-  background: linear-gradient(
-    135deg,
-    var(--bg) 0%,
-    var(--accent-light) 100%
-  );
+  padding: 120px 0;
+  background-color: var(--bg);
   position: relative;
   overflow: hidden;
+  border-bottom: var(--neo-border-width) solid var(--primary);
 }
 
 .hero > .container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 0.8fr;
   gap: 4rem;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .heroContent h1 {
-  font-size: var(--font-size-4xl);
+  font-size: 4rem;
   margin-bottom: var(--space-lg);
   color: var(--primary);
+  line-height: 1.05;
+  text-shadow: 2px 2px 0px var(--accent-blue-light);
 }
 
 .heroContent p {
   font-size: var(--font-size-lg);
   color: var(--text-muted);
   margin-bottom: var(--space-2xl);
-  max-width: 500px;
+  max-width: 550px;
+  font-weight: 500;
 }
 
 .ctaButtons {
@@ -47,7 +49,7 @@
   display: inline-flex;
 }
 
-/* Hero Visual */
+/* Hero Visual - Sticker style cards */
 .heroVisual {
   position: relative;
   height: 400px;
@@ -58,115 +60,167 @@
 .card2,
 .card3 {
   position: absolute;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  background: var(--bg-secondary);
+  border: var(--neo-border);
+  border-radius: var(--neo-radius-card);
   padding: var(--space-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--neo-shadow);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
   text-align: center;
   animation: float 3s ease-in-out infinite;
-  width: 140px;
+  width: 150px;
+  transition: all var(--transition-fast);
+}
+
+.card1:hover,
+.card2:hover,
+.card3:hover {
+  transform: scale(1.1) !important;
+  z-index: 10;
 }
 
 .card1 {
-  top: 30px;
-  right: 20px;
+  top: 20px;
+  right: 60px;
+  transform: rotate(-6deg);
   animation-delay: 0s;
+  background-color: var(--bg-secondary);
 }
 
 .card2 {
-  top: 200px;
-  right: -20px;
+  top: 180px;
+  right: -10px;
+  transform: rotate(5deg);
   animation-delay: 0.5s;
+  background-color: var(--accent-blue-light);
 }
 
 .card3 {
-  bottom: 40px;
-  right: 120px;
+  bottom: 30px;
+  right: 140px;
+  transform: rotate(-3deg);
   animation-delay: 1s;
+  background-color: var(--accent-fluo-light);
 }
 
 .cardIcon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-light);
-  border-radius: var(--radius-lg);
-  color: var(--accent);
+  background: var(--bg-secondary);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  color: var(--primary);
+  box-shadow: 2px 2px 0px var(--primary);
+}
+
+.card1 .cardIcon { background-color: var(--accent-fluo); }
+.card2 .cardIcon { background-color: var(--accent); color: white; }
+.card3 .cardIcon { background-color: var(--accent-blue); }
+
+.card1 p,
+.card2 p,
+.card3 p {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--primary);
+  margin: 0;
 }
 
 .cardIcon svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 }
 
 @keyframes float {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(var(--rot, -3deg));
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-15px) rotate(var(--rot-hover, 3deg));
   }
 }
+
+.card1 { --rot: -6deg; --rot-hover: -2deg; }
+.card2 { --rot: 5deg; --rot-hover: 9deg; }
+.card3 { --rot: -3deg; --rot-hover: -7deg; }
 
 /* ============================================================
    FEATURES SECTION
    ============================================================ */
 
 .features {
-  padding: 100px 0;
-  background: var(--bg);
+  padding: 120px 0;
+  background: var(--bg-secondary);
+  border-bottom: var(--neo-border-width) solid var(--primary);
 }
 
 .features h2 {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
   font-size: var(--font-size-3xl);
+  position: relative;
+}
+
+.features h2::after {
+  content: "⚡";
+  position: absolute;
+  font-size: 2rem;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%) rotate(15deg);
 }
 
 .featuresGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2.5rem;
 }
 
 .features .card {
   position: relative;
-  padding: var(--space-2xl);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
 }
 
 .featureNumber {
-  font-size: var(--font-size-2xl);
+  font-family: var(--font-heading);
+  font-size: 3rem;
   font-weight: 900;
-  color: var(--accent-light);
-  margin-bottom: var(--space-md);
+  color: var(--accent);
+  margin-bottom: var(--space-sm);
   line-height: 1;
+  text-shadow: 2px 2px 0px var(--primary);
 }
 
 .features h3 {
   margin-bottom: var(--space-md);
   font-size: var(--font-size-xl);
+  font-weight: 800;
 }
 
 .features p {
   font-size: var(--font-size-sm);
   margin: 0;
+  color: var(--text-muted);
 }
 
 /* ============================================================
-   STATS SECTION
+   STATS SECTION (Macadam Fluo Yellow Aesthetic)
    ============================================================ */
 
 .stats {
-  padding: 100px 0;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: white;
+  padding: 80px 0;
+  background-color: var(--accent-fluo);
+  color: var(--primary);
+  border-bottom: var(--neo-border-width) solid var(--primary);
 }
 
 .statsGrid {
@@ -176,16 +230,34 @@
   text-align: center;
 }
 
+.statsGrid > div {
+  padding: var(--space-lg);
+  background: var(--bg-secondary);
+  border: var(--neo-border);
+  border-radius: var(--neo-radius-card);
+  box-shadow: 4px 4px 0px var(--primary);
+  transition: transform var(--transition-fast);
+}
+
+.statsGrid > div:hover {
+  transform: translate(-3px, -3px) rotate(1.5deg);
+  box-shadow: 7px 7px 0px var(--primary);
+}
+
 .statNumber {
-  font-size: 3.5rem;
+  font-family: var(--font-heading);
+  font-size: 4rem;
   font-weight: 900;
-  color: var(--accent);
-  margin-bottom: var(--space-md);
+  color: var(--primary);
+  margin-bottom: var(--space-xs);
+  line-height: 1;
 }
 
 .stats p {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--primary);
   margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
   font-size: var(--font-size-lg);
 }
 
@@ -196,14 +268,15 @@
 .footer {
   padding: var(--space-2xl) 0;
   background: var(--primary);
-  color: white;
+  color: var(--bg-secondary);
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--bg-tertiary);
+  font-family: var(--font-heading);
+  font-weight: 600;
 }
 
 /* ============================================================
@@ -223,11 +296,15 @@
   .hero {
     padding: 80px 0;
   }
+  
+  .heroContent h1 {
+    font-size: 3rem;
+  }
 }
 
 @media (max-width: 768px) {
   .heroContent h1 {
-    font-size: var(--font-size-3xl);
+    font-size: 2.6rem;
   }
 
   .heroContent p {
@@ -248,26 +325,14 @@
   }
 
   .features h2 {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 
   .featuresGrid {
-    gap: 1rem;
-  }
-
-  .features .card {
-    padding: var(--space-lg);
-  }
-
-  .featureNumber {
-    font-size: var(--font-size-lg);
-  }
-
-  .features h3 {
-    font-size: var(--font-size-lg);
+    gap: 1.5rem;
   }
 
   .statNumber {
-    font-size: 2rem;
+    font-size: 3rem;
   }
 }

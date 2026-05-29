@@ -3,9 +3,9 @@
 }
 
 .hero {
-  padding: 60px 0;
-  background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg) 100%);
-  border-bottom: 1px solid var(--border);
+  padding: 80px 0;
+  background-image: linear-gradient(135deg, var(--accent-fluo-light) 0%, var(--bg) 100%);
+  border-bottom: var(--neo-border-width) solid var(--primary);
 }
 
 .hero h1 {
@@ -18,48 +18,73 @@
   font-size: var(--font-size-lg);
   color: var(--text-muted);
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
-.hero strong {
-  color: var(--accent);
-  font-weight: 700;
+/* Eclairs Badge */
+.eclairsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.2rem 0.6rem;
+  background: var(--accent-fluo);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  box-shadow: 2px 2px 0px var(--primary);
+  transform: rotate(-1.5deg);
 }
 
 .cards {
-  padding: 60px 0;
+  padding: 80px 0;
 }
 
 .cardsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
 }
 
-.cards .card {
+.cardsGrid :global(.card) {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
+  min-height: 280px;
 }
 
-.cards .card h3 {
+.cardsGrid :global(.card) h3 {
   margin: 0;
   font-size: var(--font-size-xl);
+  font-weight: 800;
 }
 
-.cards .card p {
+.cardsGrid :global(.card) p {
   margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 .cardIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  background: var(--accent-light);
-  border-radius: var(--radius-lg);
-  color: var(--accent);
+  width: 54px;
+  height: 54px;
+  background: var(--bg);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  color: var(--primary);
+  box-shadow: 2px 2px 0px var(--primary);
 }
+
+.cardsGrid :global(.card):nth-child(1) .cardIcon { background-color: var(--accent-blue-light); }
+.cardsGrid :global(.card):nth-child(2) .cardIcon { background-color: var(--accent-fluo); }
+.cardsGrid :global(.card):nth-child(3) .cardIcon { background-color: var(--accent-light); color: var(--accent); }
 
 .cardIcon svg {
   width: 28px;
@@ -67,58 +92,94 @@
 }
 
 .cta {
-  padding: 60px 0;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border);
+  padding: 80px 0;
+  background: var(--bg-tertiary);
+  border-top: var(--neo-border-width) solid var(--primary);
 }
 
 .ctaBox {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: white;
+  background: var(--accent-blue-light);
+  color: var(--primary);
   padding: 4rem;
-  border-radius: var(--radius-2xl);
+  border: var(--neo-border);
+  border-radius: var(--neo-radius-card);
+  box-shadow: var(--neo-shadow);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xl);
+  gap: var(--space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaBox::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  background-color: var(--accent-fluo);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.ctaBox::after {
+  content: "⚡";
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2rem;
+  z-index: 2;
 }
 
 .ctaIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
-  background: rgba(59, 130, 246, 0.2);
-  border-radius: var(--radius-lg);
-  color: var(--accent);
+  width: 64px;
+  height: 64px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--primary);
+  border-radius: 14px;
+  color: var(--primary);
+  box-shadow: 3px 3px 0px var(--primary);
+  z-index: 2;
 }
 
 .ctaIcon svg {
   width: 32px;
   height: 32px;
-  color: white;
+  color: var(--primary);
 }
 
 .ctaBox h2 {
   margin: 0;
-  color: white;
+  color: var(--primary);
+  font-size: var(--font-size-3xl);
+  font-weight: 900;
+  z-index: 2;
 }
 
 .ctaBox p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-muted);
   font-size: var(--font-size-lg);
+  font-weight: 600;
+  max-width: 500px;
+  z-index: 2;
 }
 
 .ctaBox .btn {
   margin-top: var(--space-md);
+  z-index: 2;
 }
 
 @media (max-width: 768px) {
   .hero {
-    padding: 40px 0;
+    padding: 50px 0;
   }
 
   .hero h1 {
@@ -127,16 +188,16 @@
 
   .cards,
   .cta {
-    padding: 40px 0;
+    padding: 50px 0;
   }
 
   .cardsGrid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .ctaBox {
-    padding: 2rem;
+    padding: 2.5rem 1.5rem;
   }
 
   .ctaBox h2 {

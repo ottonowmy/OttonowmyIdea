@@ -2,30 +2,32 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+  background: var(--bg-secondary);
+  border-bottom: var(--neo-border-width) solid var(--primary);
+  height: 80px;
 }
 
 .navContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
+  height: 100%;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
+  font-family: var(--font-heading);
   font-size: var(--font-size-xl);
-  font-weight: 700;
+  font-weight: 900;
   color: var(--primary);
-  transition: color var(--transition-fast);
   text-decoration: none;
+  transition: transform var(--transition-fast);
 }
 
 .logo:hover {
+  transform: scale(1.05) rotate(-1deg);
   color: var(--accent);
 }
 
@@ -33,19 +35,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-  border-radius: var(--radius-lg);
+  width: 38px;
+  height: 38px;
+  background: var(--accent);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
   color: white;
   font-weight: 900;
   font-size: var(--font-size-lg);
+  transform: rotate(-6deg);
+  box-shadow: 2px 2px 0px var(--primary);
+  transition: transform var(--transition-fast);
+}
+
+.logo:hover .logoIcon {
+  transform: rotate(5deg) scale(1.1);
 }
 
 .navLinks {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  gap: var(--space-xl);
   margin-left: var(--space-3xl);
 }
 
@@ -53,15 +63,23 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  font-family: var(--font-heading);
   font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-weight: 800;
   color: var(--text-muted);
-  transition: color var(--transition-fast);
   text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
 }
 
 .navLink:hover {
-  color: var(--accent);
+  color: var(--primary);
+  background-color: var(--bg-tertiary);
+  border: 2px solid var(--primary);
+  box-shadow: 2px 2px 0px var(--primary);
+  transform: translate(-2px, -2px);
 }
 
 .navLink svg {
@@ -75,42 +93,72 @@
   gap: var(--space-lg);
 }
 
+/* Compteur d'éclairs (Macadam / Gamification) */
 .eclairs {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-sm) var(--space-md);
-  background: var(--accent-light);
-  border-radius: var(--radius-lg);
-  color: var(--accent);
-  font-weight: 700;
+  padding: 0.5rem 0.9rem;
+  background: var(--accent-fluo);
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-weight: 900;
   font-size: var(--font-size-sm);
+  box-shadow: 3px 3px 0px var(--primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.eclairs:hover {
+  transform: translate(-2px, -2px) scale(1.05);
+  box-shadow: 5px 5px 0px var(--primary);
+  background-color: var(--accent-fluo-hover);
 }
 
 .eclairs svg {
   width: 18px;
   height: 18px;
+  color: var(--primary);
+  animation: pulse-lightning 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-lightning {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(15deg);
+  }
 }
 
 .settingsBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  color: var(--text-muted);
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  color: var(--primary);
   cursor: pointer;
   transition: all var(--transition-fast);
-  border: none;
+  box-shadow: 2px 2px 0px var(--primary);
   padding: 0;
 }
 
 .settingsBtn:hover {
   background: var(--bg-tertiary);
   color: var(--accent);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--primary);
+}
+
+.settingsBtn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--primary);
 }
 
 .settingsBtn svg {
@@ -123,12 +171,8 @@
     display: none;
   }
 
-  .navLink span {
-    display: none;
-  }
-
   .settingsBtn {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 }

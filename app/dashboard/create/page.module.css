@@ -3,37 +3,43 @@
   justify-content: center;
   align-items: flex-start;
   min-height: calc(100vh - 200px);
-  padding: 40px 20px;
+  padding: 40px var(--space-xl);
 }
 
 .formContainer {
   width: 100%;
-  max-width: 600px;
-  padding: 40px;
-  background: #f8f8f8;
-  border: 1px solid #e5e5e5;
-  border-radius: 16px;
+  max-width: 650px;
+  padding: var(--space-2xl);
+  background: var(--bg-secondary);
+  border: var(--neo-border);
+  border-radius: var(--neo-radius-card);
+  box-shadow: var(--neo-shadow);
 }
 
 .header h1 {
-  font-size: 28px;
+  font-size: var(--font-size-3xl);
+  font-weight: 900;
   margin-bottom: 8px;
+  color: var(--primary);
 }
 
 .header p {
-  font-size: 16px;
-  color: #666;
+  font-size: var(--font-size-base);
+  color: var(--text-muted);
+  font-weight: 500;
   margin-bottom: 32px;
 }
 
 .error {
-  padding: 12px;
-  background: #fee;
-  border: 1px solid #fcc;
-  border-radius: 8px;
-  color: #c33;
-  font-size: 13px;
-  margin-bottom: 20px;
+  padding: 14px;
+  background: var(--accent-light);
+  border: var(--neo-border);
+  border-radius: var(--neo-radius-btn);
+  color: var(--accent-hover);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  box-shadow: 3px 3px 0px var(--primary);
 }
 
 .form {
@@ -49,49 +55,69 @@
 }
 
 .formGroup label {
+  font-family: var(--font-heading);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
+  color: var(--primary);
 }
 
 .formGroup input,
 .formGroup textarea,
 .formGroup select {
-  padding: 12px;
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
+  padding: 14px;
+  border: var(--neo-border);
+  border-radius: var(--neo-radius-btn);
   font-size: 14px;
-  font-family: inherit;
-  background: #fff;
-  transition: all 0.3s;
+  font-weight: 600;
+  background: var(--bg-secondary);
+  box-shadow: 3px 3px 0px var(--primary);
+  transition: all var(--transition-fast);
 }
 
 .formGroup input:focus,
 .formGroup textarea:focus,
 .formGroup select:focus {
   outline: none;
-  border-color: #1a1a1a;
-  background: #fafafa;
+  background: #FFFFFF;
+  box-shadow: 5px 5px 0px var(--accent-blue);
+  transform: translate(-2px, -2px);
 }
 
 .formGroup input:disabled,
 .formGroup textarea:disabled,
 .formGroup select:disabled {
-  background: #f5f5f5;
-  color: #ccc;
+  background: #F4F4F5;
+  color: #A1A1AA;
+  box-shadow: none;
   cursor: not-allowed;
+  transform: none;
 }
 
 .formGroup textarea {
   resize: vertical;
 }
 
+/* Coupon/Ticket cost section (Macadam gamified styles) */
 .info {
   padding: 20px;
-  background: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
+  background: var(--accent-fluo-light);
+  border: var(--neo-border);
+  border-radius: var(--neo-radius-btn);
+  box-shadow: 3px 3px 0px var(--primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-image: repeating-linear-gradient(45deg, var(--primary), var(--primary) 10px, transparent 10px, transparent 20px);
 }
 
 .costBox {
@@ -100,72 +126,99 @@
   align-items: center;
   margin-bottom: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 2px dashed var(--primary);
 }
 
 .costLabel {
+  font-family: var(--font-heading);
   font-size: 13px;
-  color: #666;
+  font-weight: 800;
+  color: var(--primary);
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
 }
 
 .costValue {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 20px;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--primary);
+  background-color: var(--accent-fluo);
+  padding: 2px 10px;
+  border: 2px solid var(--primary);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px var(--primary);
 }
 
 .costBox svg {
   width: 20px;
   height: 20px;
-  color: #1a1a1a;
+  color: var(--primary);
+  animation: bounce-slow 2s infinite;
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 .note {
   font-size: 12px;
-  color: #999;
+  color: var(--text-muted);
+  font-weight: 600;
   line-height: 1.5;
   margin: 0;
 }
 
 .submitButton {
-  padding: 14px;
-  background: #1a1a1a;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 16px;
+  background: var(--accent);
+  color: #FFFFFF;
+  border: var(--neo-border);
+  border-radius: var(--neo-radius-btn);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
-  transition: all 0.3s;
+  box-shadow: var(--neo-shadow);
+  transition: all var(--transition-fast);
+  width: 100%;
 }
 
 .submitButton:hover:not(:disabled) {
-  background: #333;
-  transform: translateY(-2px);
+  background: var(--accent-hover);
+  transform: translate(-3px, -3px);
+  box-shadow: var(--neo-shadow-hover);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: var(--neo-shadow-active);
 }
 
 .submitButton:disabled {
-  opacity: 0.7;
+  background-color: #E4E4E7;
+  color: #A1A1AA;
+  box-shadow: 2px 2px 0px var(--primary);
+  transform: translate(2px, 2px);
   cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
   .pageContainer {
-    padding: 20px;
+    padding: 20px var(--space-md);
   }
 
   .formContainer {
-    padding: 24px;
+    padding: var(--space-lg);
   }
 
   .header h1 {
-    font-size: 24px;
+    font-size: var(--font-size-2xl);
   }
 }
