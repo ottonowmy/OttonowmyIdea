@@ -11,17 +11,36 @@ export default function SetupPage() {
   const router = useRouter();
   const [pseudo, setPseudo] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
   const [checking, setChecking] = useState(false);
+  const [pseudoAvailable, setPseudoAvailable] = useState<boolean | null>(null);
+  const [error, setError] = useState('');
+  const [initialCheck, setInitialCheck] = useState(true);
 
+  // Vérifier si l'utilisateur a déjà un pseudo → rediriger vers dashboard
   useEffect(() => {
-    if (isLoaded && !user) {
-      router.push('/auth/sign-up');
+    if (!isLoaded) return;
+    if (!user) {
+      router.replace('/auth/sign-up');
+      return;
     }
+
+    fetch(`/api/airtable/users/${user.id}`)
+      .then((res) => {
+        if (res.ok) {
+          // L'utilisateur a déjà un pseudo → aller au dashboard
+          router.replace('/dashboard');
+        } else {
+          setInitialCheck(false);
+        }
+      })
+      .catch(() => setInitialCheck(false));
   }, [isLoaded, user, router]);
 
   const handlePseudoChange = async (value: string) => {
     setPseudo(value);
+    setPseudoAvailable(null);
+    setError('');
+
     if (value.length < 3) return;
 
     setChecking(true);
@@ -29,9 +48,10 @@ export default function SetupPage() {
       const res = await fetch(`/api/airtable/check-pseudo?pseudo=${encodeURIComponent(value)}`);
       const data = await res.json();
       if (data.exists) {
+        setPseudoAvailable(false);
         setError('Ce pseudo est déjà pris');
       } else {
-        setError('');
+        setPseudoAvailable(true);
       }
     } catch (e) {
       console.error('Error:', e);
@@ -47,14 +67,16 @@ export default function SetupPage() {
       setError('Le pseudo est requis');
       return;
     }
-
     if (pseudo.length < 3) {
-      setError('Au minimum 3 caractères');
+      setError('Minimum 3 caractères');
       return;
     }
-
     if (pseudo.length > 30) {
       setError('Maximum 30 caractères');
+      return;
+    }
+    if (pseudoAvailable === false) {
+      setError('Ce pseudo est déjà pris');
       return;
     }
 
@@ -62,15 +84,18 @@ export default function SetupPage() {
     setError('');
 
     try {
+      // Vérification finale anti-doublon
       const checkRes = await fetch(`/api/airtable/check-pseudo?pseudo=${encodeURIComponent(pseudo)}`);
       const checkData = await checkRes.json();
 
       if (checkData.exists) {
         setError('Ce pseudo est déjà pris');
+        setPseudoAvailable(false);
         setLoading(false);
         return;
       }
 
+      // Créer l'utilisateur dans Airtable
       const res = await fetch('/api/airtable/create-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -83,19 +108,26 @@ export default function SetupPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || 'Erreur');
+        throw new Error(data.error || 'Erreur lors de la création');
       }
 
+      // Succès → aller au dashboard
       router.push('/dashboard');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur');
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
       setLoading(false);
     }
   };
 
-  if (!isLoaded) {
-    return <div className={styles.loading}>Chargement...</div>;
+  // Loading states
+  if (!isLoaded || initialCheck) {
+    return (
+      <div className={styles.loading}>
+        <span style={{ fontSize: '2rem', animation: 'spin 1s linear infinite', display: 'inline-block' }}>⚡</span>
+        Chargement...
+      </div>
+    );
   }
 
   return (
@@ -103,15 +135,21 @@ export default function SetupPage() {
       <div className={styles.setupContainer}>
         <div className={styles.setupBox}>
           <div className={styles.header}>
-            <div className={styles.badge}>Étape 1 / 1</div>
+            <div className={styles.badge}>Bienvenue ! ⚡</div>
             <h1>Choisissez votre pseudo</h1>
-            <p>C'est comme votre nom d'utilisateur sur la plateforme</p>
+            <p>Votre identifiant public sur la plateforme. Il ne peut pas être changé.</p>
           </div>
 
           {error && (
             <div className={styles.error}>
               <span className={styles.errorIcon}>{Icons.error}</span>
               <span>{error}</span>
+            </div>
+          )}
+
+          {pseudoAvailable === true && pseudo.length >= 3 && (
+            <div className={styles.success}>
+              <span>✓ Ce pseudo est disponible !</span>
             </div>
           )}
 
@@ -128,7 +166,7 @@ export default function SetupPage() {
                   maxLength={30}
                   required
                   disabled={loading}
-                  className={styles.input}
+                  className={`${styles.input} ${pseudoAvailable === false ? styles.inputError : ''} ${pseudoAvailable === true ? styles.inputSuccess : ''}`}
                 />
                 {checking && (
                   <span className={styles.checking}>
@@ -143,17 +181,16 @@ export default function SetupPage() {
 
             <button
               type="submit"
-              disabled={loading || checking}
+              disabled={loading || checking || pseudoAvailable === false}
               className="btn btn-primary btn-lg"
               style={{ width: '100%' }}
             >
-              {Icons.check}
-              {loading ? 'Création en cours...' : 'Continuer'}
+              {loading ? 'Création en cours...' : '⚡ Choisir ce pseudo'}
             </button>
           </form>
 
           <div className={styles.info}>
-            <p>Vous recevrez <strong>2500 éclairs</strong> pour démarrer</p>
+            <p>Vous recevrez <strong>2 500 éclairs</strong> pour démarrer votre aventure !</p>
           </div>
         </div>
       </div>
